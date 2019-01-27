@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+	targetNamespace="http://www.ofi.at/CertificateControl"
+	xmlns:tns="http://www.ofi.at/CertificateControl"
+	elementFormDefault="qualified">
+
+	<complexType name="CertificateColumnType">
+		<attribute name="sourceColumnName" type="string" />
+		<attribute name="sourceType" type="string" />
+		<attribute name="targetColumnName" type="string" />
+		<attribute name="targetType" type="string" />
+	</complexType>
+	
+</schema>
