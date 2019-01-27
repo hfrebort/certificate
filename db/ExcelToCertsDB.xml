@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<columns>
+  <col id="B"  type="date" dbcol="finished" />
+  <col id="C"  type="date" dbcol="vb1" />
+  <col id="D"  type="date" dbcol="vb2" /> 					
+  <col id="E"  type="date" dbcol="vb3" /> 					
+  <col id="F"  type="date" dbcol="vb4" /> 					
+  <col id="G"  type="date" dbcol="manufacturer" />
+  <col id="H"  type="date" dbcol="manufacturerContact" /> 	
+  <col id="I"  type="char" dbcol="manufacturerLocation" /> 	
+  <col id="J"  type="char" dbcol="productDescription" /> 	
+  <col id="K"  type="char" dbcol="auditMonthLatest" /> 		
+  <col id="L"  type="char" dbcol="checkedBy" /> 			
+  <col id="M"  type="date" dbcol="auditor" /> 					
+  <col id="N"  type="char" dbcol="checkOf" /> 				
+  <col id="O"  type="char" dbcol="probeTaken" /> 			
+  <col id="P"  type="char" dbcol="AoC" /> 					
+  <col id="Q"  type="char" dbcol="n1" />  					
+  <col id="R"  type="int"  dbcol="n2" />  					
+  <col id="S"  type="char" dbcol="n3" />  					
+  <col id="T"  type="char" dbcol="n4" />  					
+  <col id="U"  type="char" dbcol="n5" />  					
+  <col id="V"  type="char" dbcol="n6" />  					
+  <col id="W"  type="char" dbcol="n7" />  					
+  <col id="X"  type="char" dbcol="n8" />  					
+  <col id="Y"  type="char" dbcol="n9" />  					
+  <col id="Z"  type="char" dbcol="n10" /> 					
+  <col id="AA" type="char" dbcol="certIssued" /> 			
+  <col id="AB" type="char" dbcol="fack1" /> 				
+  <col id="AC" type="date" dbcol="fack2" /> 				
+  <col id="AD" type="char" dbcol="certNumber" /> 			
+  <col id="AE" type="char" dbcol="BPVbranches" />			
+  <col id="AF" type="char" dbcol="countryforInvoice" /> 	
+  <col id="AG" type="date" dbcol="industry" />				
+  <col id="AH" type="char" dbcol="internalCostLocation" />	
+  <col id="AI" type="char" dbcol="report2018" />			
+  <col id="AJ" type="char" dbcol="report2017" />			
+</columns>  
+<!-- 
+	finished 				date null			# "Erledi-gung"
+	, vb1 					date null
+    , vb2 					date null
+    , vb3 					date null
+    , vb4 					date null
+    , manufacturer 			varchar(255)		# "Name des          Herstellers"
+    , manufacturerContact 	varchar(128)		# "Anprechperson beim Hersteller"
+    , manufacturerLocation 	varchar(128)		# "Produktionsstandort des Herstellers"
+    , productDescription 	varchar(255)		# "Produktbeschreibung (Norm/en)"
+    , auditMonthLatest 		date				# "Auditmonat spätestens"
+    , checkedBy 			varchar(128)		# "PÜ-Stelle"
+    , auditor 				varchar(128)		# "Auditor"
+    , checkOf 				varchar(32)			# "Kontrolle der ..."
+    , probeTaken 			char(1)				# "Probe-   nahme"
+    , AoC 					int					# "AoC"									--> laut Christ "Zahl"
+    , n1  					varchar(32) null
+    , n2  					varchar(32) null
+    , n3  					varchar(32) null
+    , n4  					varchar(32) null
+    , n5  					varchar(32) null
+    , n6  					varchar(32) null
+    , n7  					varchar(32) null
+    , n8  					varchar(32) null
+    , n9  					varchar(32) null
+    , n10 					varchar(32) null
+    , certIssued 			date null 			# "Ausstel-lung Zertifikat"
+	, fack1 				varchar(32) null	# "ÜV                   Z mit Fa."   	--> Überwachungsvertrag mit Firma
+    , fack2 				varchar(32) null	# "ÜV                     Z mit PÜ"  	--> Überwachungsvertrag mit Prüfstelle
+    , certNumber 			varchar(32) null	# "Zertifikatsnr."
+    , BPVbranches			date null			# "BPV-Fachgebiete" 					--> "Bauprodukteverordnung-Fachgebiete"
+    , countryforInvoice 	varchar(64) null	# "Land für Faktura"
+    , industry				varchar(64) null	# "Branche"
+    , internalCostLocation	varchar(32) null	# "interne KST"
+    , report2018			varchar(32) null	# "Bericht 2018"
+    , report2017			varchar(32) null	# "Bericht 2017"
+ -->

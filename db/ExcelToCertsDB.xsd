@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <complexType name="col">
+    	<attribute name="id">
+    		<simpleType>
+    			<restriction base="string">
+    				<pattern value="[A-Z]{3}"></pattern>
+    			</restriction>
+    		</simpleType>
+    	</attribute>
+    	<attribute name="type">
+    		<simpleType>
+    			<restriction base="string">
+    				<enumeration value="date"></enumeration>
+    				<enumeration value="int"></enumeration>
+    				<enumeration value="char"></enumeration>
+    			</restriction>
+    		</simpleType>
+    	</attribute>
+    	<attribute name="dbcol" type="string"></attribute>
+    </complexType>
+
+    <element name="CertSheet" type="tns:col"></element>
+</schema>
