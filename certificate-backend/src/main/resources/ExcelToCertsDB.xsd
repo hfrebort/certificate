@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-	xmlns:tns="http://www.example.org/NewXMLSchema"
-	targetNamespace="http://www.example.org/NewXMLSchema" 
+	targetNamespace="http://www.ofi.at/ExcelToCertsDB"
+	xmlns:tns="http://www.ofi.at/ExcelToCertsDB"
 	elementFormDefault="qualified">
     <complexType name="col">
     	<attribute name="id">
