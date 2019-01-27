@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.example.org/NewXMLSchema"
+	targetNamespace="http://www.example.org/NewXMLSchema" 
+	elementFormDefault="qualified">
     <complexType name="col">
     	<attribute name="id">
     		<simpleType>
@@ -20,5 +23,5 @@
     	<attribute name="dbcol" type="string"></attribute>
     </complexType>
 
-    <element name="CertSheet" type="tns:col"></element>
+    <element name="ExcelCols" type="tns:col"></element>
 </schema>

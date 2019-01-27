@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<columns>
+<CertSheet sheetname="Auditprogramm - Gültige Zert" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="ExcelToCertsDB.xsd">
   <col id="B"  type="date" dbcol="finished" />
   <col id="C"  type="date" dbcol="vb1" />
   <col id="D"  type="date" dbcol="vb2" /> 					
@@ -35,7 +37,7 @@
   <col id="AH" type="char" dbcol="internalCostLocation" />	
   <col id="AI" type="char" dbcol="report2018" />			
   <col id="AJ" type="char" dbcol="report2017" />			
-</columns>  
+</CertSheet>  
 <!-- 
 	finished 				date null			# "Erledi-gung"
 	, vb1 					date null
@@ -51,7 +53,7 @@
     , auditor 				varchar(128)		# "Auditor"
     , checkOf 				varchar(32)			# "Kontrolle der ..."
     , probeTaken 			char(1)				# "Probe-   nahme"
-    , AoC 					int					# "AoC"									--> laut Christ "Zahl"
+    , AoC 					int					# "AoC"									== laut Christ "Zahl"
     , n1  					varchar(32) null
     , n2  					varchar(32) null
     , n3  					varchar(32) null
@@ -63,10 +65,10 @@
     , n9  					varchar(32) null
     , n10 					varchar(32) null
     , certIssued 			date null 			# "Ausstel-lung Zertifikat"
-	, fack1 				varchar(32) null	# "ÜV                   Z mit Fa."   	--> Überwachungsvertrag mit Firma
-    , fack2 				varchar(32) null	# "ÜV                     Z mit PÜ"  	--> Überwachungsvertrag mit Prüfstelle
+	, fack1 				varchar(32) null	# "ÜV                   Z mit Fa."   	== Überwachungsvertrag mit Firma
+    , fack2 				varchar(32) null	# "ÜV                     Z mit PÜ"  	== Überwachungsvertrag mit Prüfstelle
     , certNumber 			varchar(32) null	# "Zertifikatsnr."
-    , BPVbranches			date null			# "BPV-Fachgebiete" 					--> "Bauprodukteverordnung-Fachgebiete"
+    , BPVbranches			date null			# "BPV-Fachgebiete" 					== "Bauprodukteverordnung-Fachgebiete"
     , countryforInvoice 	varchar(64) null	# "Land für Faktura"
     , industry				varchar(64) null	# "Branche"
     , internalCostLocation	varchar(32) null	# "interne KST"
