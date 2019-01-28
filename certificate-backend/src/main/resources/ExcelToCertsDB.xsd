@@ -1,27 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema"
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
 	targetNamespace="http://www.ofi.at/ExcelToCertsDB"
 	xmlns:tns="http://www.ofi.at/ExcelToCertsDB"
+	attributeFormDefault="unqualified" 
 	elementFormDefault="qualified">
-    <complexType name="col">
-    	<attribute name="id">
-    		<simpleType>
-    			<restriction base="string">
-    				<pattern value="[A-Z]{3}"></pattern>
-    			</restriction>
-    		</simpleType>
-    	</attribute>
-    	<attribute name="type">
-    		<simpleType>
-    			<restriction base="string">
-    				<enumeration value="date"></enumeration>
-    				<enumeration value="int"></enumeration>
-    				<enumeration value="char"></enumeration>
-    			</restriction>
-    		</simpleType>
-    	</attribute>
-    	<attribute name="dbcol" type="string"></attribute>
-    </complexType>
 
-    <element name="ExcelCols" type="tns:col"></element>
-</schema>
+	<xs:complexType name="ColumnMappingType">
+		<xs:attribute name="excelColumn">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[A-Z]{1,3}"></xs:pattern>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="type">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="date"></xs:enumeration>
+					<xs:enumeration value="int"></xs:enumeration>
+					<xs:enumeration value="char"></xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="databaseColumn" type="xs:string"></xs:attribute>
+	</xs:complexType>
+
+    <xs:complexType name="CertificateSheet">
+	   	<xs:sequence>
+	   		<xs:element name="columnMapping" type="tns:ColumnMappingType" maxOccurs="unbounded" />
+	   	</xs:sequence>
+	   	
+        <xs:attribute name="sheetName" type="xs:string"></xs:attribute>
+    </xs:complexType>
+    
+    <xs:element name="certificateSheet" type="tns:CertificateSheet"></xs:element>
+</xs:schema>
