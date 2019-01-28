@@ -9,7 +9,7 @@
 	<modules>
 		<module>certificate-client</module>
 		<module>certificate-backend</module>		
-		</modules>
+	</modules>
 	<dependencyManagement>
 		<dependencies>
 			<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->

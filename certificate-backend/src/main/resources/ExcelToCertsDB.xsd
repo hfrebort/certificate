@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-	targetNamespace="http://www.ofi.at/ExcelToCertsDB"
-	xmlns:tns="http://www.ofi.at/ExcelToCertsDB"
 	attributeFormDefault="unqualified" 
 	elementFormDefault="qualified">
+    
+    <xs:element name="certificateSheet" type="CertificateSheetType"></xs:element>
+
+    <xs:complexType name="CertificateSheetType">
+	   	<xs:sequence>
+	   		<xs:element name="columnMapping" type="ColumnMappingType" maxOccurs="unbounded" />
+	   	</xs:sequence>
+        <xs:attribute name="sheetName" type="xs:string"></xs:attribute>
+    </xs:complexType>
 
 	<xs:complexType name="ColumnMappingType">
 		<xs:attribute name="excelColumn">
@@ -24,14 +31,4 @@
 		</xs:attribute>
 		<xs:attribute name="databaseColumn" type="xs:string"></xs:attribute>
 	</xs:complexType>
-
-    <xs:complexType name="CertificateSheet">
-	   	<xs:sequence>
-	   		<xs:element name="columnMapping" type="tns:ColumnMappingType" maxOccurs="unbounded" />
-	   	</xs:sequence>
-	   	
-        <xs:attribute name="sheetName" type="xs:string"></xs:attribute>
-    </xs:complexType>
-    
-    <xs:element name="certificateSheet" type="tns:CertificateSheet"></xs:element>
 </xs:schema>

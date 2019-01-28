@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<certificateSheet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"	
-	xsi:noNamespaceSchemaLocation="ExcelToCertsDB.xsd"
+<certificateSheet 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:noNamespaceSchemaLocation="./ExcelToCertsDB.xsd" 
 	sheetName="Auditprogramm - Gültige Zert">
 	<columnMapping excelColumn="B"  type="date" databaseColumn="finished" />
 	<columnMapping excelColumn="C"  type="date" databaseColumn="vb1" />
@@ -37,7 +38,7 @@
 	<columnMapping excelColumn="AH" type="char" databaseColumn="internalCostLocation" />	
 	<columnMapping excelColumn="AI" type="char" databaseColumn="report2018" />			
 	<columnMapping excelColumn="AJ" type="char" databaseColumn="report2017" />			
-</certificateSheet>  
+</certificateSheet>
 <!-- 
 	finished 				date null			# "Erledi-gung"
 	, vb1 					date null
