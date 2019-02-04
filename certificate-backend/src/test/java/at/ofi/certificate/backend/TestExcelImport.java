@@ -30,7 +30,7 @@ public class TestExcelImport {
 
 		try (Workbook wb = WorkbookFactory.create(file)) {
 			Sheet sheet = wb.getSheet("Auditprogramm - Gültige Zert");
-			List<String> data = at.ofi.certificate.backend.ExcelSheetReader.readsheet(sheet);
+			List<String> data = at.ofi.certificate.backend.reader.ExcelSheetReader.readCells(sheet);
 			assertTrue(data.size() > 0);
 		} catch (Exception e) {
 			Assert.fail("Can not load workbook");
@@ -42,7 +42,7 @@ public class TestExcelImport {
 		try (Workbook wb = WorkbookFactory.create(new File(FILE_NAME));
 				PrintWriter writer = getUTF8writer("c:\\temp\\JavaXls\\out1.UTF8.txt")) {
 			Sheet sheet = wb.getSheet("Auditprogramm - Gültige Zert");
-			at.ofi.certificate.backend.ExcelSheetReader.readsheet(sheet).forEach(row -> {
+			at.ofi.certificate.backend.reader.ExcelSheetReader.readCells(sheet).forEach(row -> {
 				// writer.println(String.join(";", row));
 				writer.printf("%d|%s\n", row, String.join(";", row));
 			});

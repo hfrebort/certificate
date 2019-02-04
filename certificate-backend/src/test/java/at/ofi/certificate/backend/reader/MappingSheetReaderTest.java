@@ -10,7 +10,7 @@ import at.ofi.exceltocertsdb.CertificateSheetType;
 public class MappingSheetReaderTest {
 
 	private MappingSheetReader reader;
-	private CertificateSheetType sheet;
+	private CertificateSheetType mapping;
 
 	@Test
 	public void testReadXmlMapping() throws Exception {
@@ -22,21 +22,21 @@ public class MappingSheetReaderTest {
 	}
 
 	private void thenColumnsMappingsSizeIs(int expectedSize) {
-		Assert.assertNotNull("ColumnMappings are empty", this.sheet.getColumnMapping());
-		Assert.assertEquals(expectedSize, this.sheet.getColumnMapping().size());
+		Assert.assertNotNull("ColumnMappings are empty", this.mapping.getColumnMapping());
+		Assert.assertEquals(expectedSize, this.mapping.getColumnMapping().size());
 	}
 
 	private void thenSheetNameIs(String expected) {
-		Assert.assertEquals(expected, this.sheet.getSheetName());
+		Assert.assertEquals(expected, this.mapping.getSheetName());
 	}
 
 	private void thenObjetcsAreNotNull() {
-		Assert.assertNotNull("The certificate sheet is empty", this.sheet);
+		Assert.assertNotNull("The certificate sheet is empty", this.mapping);
 	}
 
 	private void whenRead() {
 		InputStream inputStream = ClassLoader.getSystemResourceAsStream("ExcelToCertsDB.xml");
-		this.sheet = this.reader.readSheet(inputStream).getValue();
+		this.mapping = this.reader.read(inputStream).getValue();
 	}
 
 	private void givenAnInstance() {

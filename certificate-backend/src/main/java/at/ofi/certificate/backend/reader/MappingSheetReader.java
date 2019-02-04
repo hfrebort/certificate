@@ -13,7 +13,7 @@ public class MappingSheetReader {
 
 	private static final String PACKAGE_NAME = "at.ofi.exceltocertsdb";
 
-	public JAXBElement<CertificateSheetType> readSheet(InputStream inputStream) {
+	public static JAXBElement<CertificateSheetType> read(InputStream inputStream) {
 		try {
 			final JAXBContext jaxbContext = JAXBContext.newInstance(PACKAGE_NAME);
 			final Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
