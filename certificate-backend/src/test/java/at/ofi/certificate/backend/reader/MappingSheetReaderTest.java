@@ -17,7 +17,7 @@ public class MappingSheetReaderTest {
 		this.givenAnInstance();
 		this.whenRead();
 		this.thenObjetcsAreNotNull();
-		this.thenSheetNameIs("Auditprogramm - Gültige Zert");
+		this.thenSheetNameIs("Auditprogramm - GÃ¼ltige Zert");
 		this.thenColumnsMappingsSizeIs(35);
 	}
 

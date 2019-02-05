@@ -1,120 +1,79 @@
 package at.ofi.certificate.backend.reader;
 
-import java.text.SimpleDateFormat;
-import java.util.AbstractMap;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.apache.commons.collections4.KeyValue;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
 import at.ofi.exceltocertsdb.ColumnMappingType;
+import org.apache.poi.ss.util.CellReference;
 
 public class ExcelSheetReader {
 
-	private static final SimpleDateFormat ISO8601DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd");
+	private static final String EMPTY_STRING = "";
 
-	public static List<String> readCells(Sheet sheet) {
-		List<String> list = new ArrayList<>();
-		sheet.spliterator()
-				.forEachRemaining(row -> row.spliterator().forEachRemaining(cell -> list.add(cell.toString())));
-		return list;
-	}
+	public static Stream<Map<ColumnMappingType,Object>> readRowsUntilEmpty(final Sheet certSheet, final List<ColumnMappingType> columnMapping, int skipRows) {
 
-	public static boolean isEmptyRow(Map<ColumnMappingType, Object> rowData) {
-		return 
-				rowData.values().stream()
-				.allMatch( data -> data == null);
-	}
-
-	public static Stream<Map<ColumnMappingType,Object>> readRows(Sheet certSheet, List<ColumnMappingType> columnMapping, int skipRows) {
-		
-		return 
+		return
 			java.util.stream.StreamSupport.stream(certSheet.spliterator(), false)
 			.skip(skipRows)
-			.map( row -> readRowDataToMap(row, columnMapping) )
-			.takeWhile( rowMap -> rowMap.values().stream().allMatch(i -> i == null) );
+			.takeWhile(row -> row.getFirstCellNum() != -1) // short representing the first logical cell in the row, or -1 if the row does not contain any cells.
+			.map( row -> readRowDataToMap(row, columnMapping) );
 	}
-	private static Map<ColumnMappingType, Object> readRowDataToMap(Row row, List<ColumnMappingType> columnMapping) {
+	private static Map<ColumnMappingType, Object> readRowDataToMap(final Row row, final List<ColumnMappingType> columnMapping)  {
 		
-		Map<ColumnMappingType, Object> result = new HashMap<ColumnMappingType, Object>();
-		
-		for ( ColumnMappingType colMap : columnMapping ) {
-			final int colNumber = excelColToNumber(colMap.getExcelColumn());
-			final Cell cell = row.getCell(colNumber);
+		final Map<ColumnMappingType, Object> result = new HashMap<ColumnMappingType, Object>();
 
-			Object value = null;
-			
-			if ( cell.getCellType() == CellType.BLANK )
+		for ( ColumnMappingType colMap : columnMapping ) {
+
+			final int colNumber = CellReference.convertColStringToIndex(colMap.getExcelColumn());
+			Cell cell = row.getCell(colNumber);
+
+			Object value;
+
+			if ( cell == null ) {
+				value = EMPTY_STRING;
+			}
+			else if ( cell.getCellType() == CellType.BLANK )
 			{
-				value = null;
+				value = EMPTY_STRING;
 			}
-			else if ( colMap.getType() == "char") {
-				value = cell.getStringCellValue();
+			else if ( "char".equals(colMap.getType())) {
+				value = getStringRepresentation(cell);
 			}
-			else if ( colMap.getType() == "int") {
-				value = Integer.valueOf( Double.valueOf( cell.getNumericCellValue() ).intValue() );
+			else if ( "int".equals(colMap.getType())) {
+				value = Integer.valueOf( (int) cell.getNumericCellValue() );
 			}
-			else if ( colMap.getType() == "date") {
-				value = cell.getDateCellValue();
+			else if ( "date".equals(colMap.getType())) {
+				java.util.Date d = cell.getDateCellValue();
+				value = d;
+			}
+			else {
+				throw new RuntimeException(String.format("unknown type [%s] from database column [%s]", colMap.getType(), colMap.getDatabaseColumn()));
 			}
 
 			result.put(colMap, value);
 		}
 		
 		return result;
-		
-		/*
-		return 
-			columnMapping.stream()
-			.map( colMap -> {
-				
-				final int colNumber = excelColToNumber(colMap.getExcelColumn());
-				final Cell cell = row.getCell(colNumber);
-
-				Object value = null;
-				
-				if ( cell.getCellType() == CellType.BLANK )
-				{
-					value = null;
-				}
-				else if ( colMap.getType() == "char") {
-					value = cell.getStringCellValue();
-				}
-				else if ( colMap.getType() == "int") {
-					value = new Integer( new Double( cell.getNumericCellValue() ).intValue() );
-				}
-				else if ( colMap.getType() == "date") {
-					value = cell.getDateCellValue();
-				}
-				
-				return new AbstractMap.SimpleEntry<ColumnMappingType, Object>(colMap, value);
-				
-			})
-			.filter( entry -> entry != null)
-			.collect(Collectors.toMap( e -> e.getKey(), e -> e.getValue() ));
-			*/
 	}
-	
-	public static int excelColToNumber(String excelcol) {
-		
-		int base = 26;
-		int number = 0;
-		
-		for ( int i=0; i < excelcol.length(); ++i ) {
-			
-			int digitDecimalValue = excelcol.charAt(i) - 'A' + 1;
-			number = number * base + digitDecimalValue; 
-			
+	private static String getStringRepresentation(Cell cell) {
+
+		String result;
+
+		if ( cell.getCellType() == CellType.NUMERIC) {
+			cell.setCellType(CellType.STRING); // https://stackoverflow.com/questions/1072561/how-can-i-read-numeric-strings-in-excel-cells-as-string-not-numbers
+			result = cell.getStringCellValue();
 		}
-		
-		return number;
+		else {
+			result = cell.toString();
+		}
+
+		return result;
 	}
 }

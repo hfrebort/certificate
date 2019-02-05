@@ -24,12 +24,13 @@ public class TestExcelImport {
 
 	private static final String FILE_NAME = "c:\\temp\\Auditprogramm Muster.xlsx";
 
+	/*
 	@Test
 	public void readSheet() throws Exception {
 		File file = new File(FILE_NAME);
 
 		try (Workbook wb = WorkbookFactory.create(file)) {
-			Sheet sheet = wb.getSheet("Auditprogramm - Gültige Zert");
+			Sheet sheet = wb.getSheet("Auditprogramm - GÃ¼ltige Zert");
 			List<String> data = at.ofi.certificate.backend.reader.ExcelSheetReader.readCells(sheet);
 			assertTrue(data.size() > 0);
 		} catch (Exception e) {
@@ -41,7 +42,7 @@ public class TestExcelImport {
 	public void writeSheetToFile() throws Exception {
 		try (Workbook wb = WorkbookFactory.create(new File(FILE_NAME));
 				PrintWriter writer = getUTF8writer("c:\\temp\\JavaXls\\out1.UTF8.txt")) {
-			Sheet sheet = wb.getSheet("Auditprogramm - Gültige Zert");
+			Sheet sheet = wb.getSheet("Auditprogramm - GÃ¼ltige Zert");
 			at.ofi.certificate.backend.reader.ExcelSheetReader.readCells(sheet).forEach(row -> {
 				// writer.println(String.join(";", row));
 				writer.printf("%d|%s\n", row, String.join(";", row));
@@ -54,4 +55,5 @@ public class TestExcelImport {
 				new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8)));
 
 	}
+	*/
 }
