@@ -1,5 +1,6 @@
 package at.ofi.certificate.backend.reader;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,19 +16,19 @@ import org.apache.poi.ss.util.CellReference;
 
 public class ExcelSheetReader {
 
-	private static final String EMPTY_STRING = "";
+	//private static final String EMPTY_STRING = "";
 
-	public static Stream<Map<ColumnMappingType,Object>> readRowsUntilEmpty(final Sheet certSheet, final List<ColumnMappingType> columnMapping, int skipRows) {
+	public static Stream<List<Object>> readRowsUntilEmpty(final Sheet certSheet, final List<ColumnMappingType> columnMapping, int skipRows) {
 
 		return
 			java.util.stream.StreamSupport.stream(certSheet.spliterator(), false)
 			.skip(skipRows)
-			.takeWhile(row -> row.getFirstCellNum() != -1) // short representing the first logical cell in the row, or -1 if the row does not contain any cells.
+			//.takeWhile(row -> row.getFirstCellNum() != -1) // short representing the first logical cell in the row, or -1 if the row does not contain any cells.
 			.map( row -> readRowDataToMap(row, columnMapping) );
 	}
-	private static Map<ColumnMappingType, Object> readRowDataToMap(final Row row, final List<ColumnMappingType> columnMapping)  {
+	private static List<Object> readRowDataToMap(final Row row, final List<ColumnMappingType> columnMapping)  {
 		
-		final Map<ColumnMappingType, Object> result = new HashMap<ColumnMappingType, Object>();
+		final List<Object> result = new ArrayList<>(columnMapping.size());
 
 		for ( ColumnMappingType colMap : columnMapping ) {
 
@@ -37,11 +38,11 @@ public class ExcelSheetReader {
 			Object value;
 
 			if ( cell == null ) {
-				value = EMPTY_STRING;
+				value = null;
 			}
 			else if ( cell.getCellType() == CellType.BLANK )
 			{
-				value = EMPTY_STRING;
+				value = null;
 			}
 			else if ( "char".equals(colMap.getType())) {
 				value = getStringRepresentation(cell);
@@ -57,7 +58,7 @@ public class ExcelSheetReader {
 				throw new RuntimeException(String.format("unknown type [%s] from database column [%s]", colMap.getType(), colMap.getDatabaseColumn()));
 			}
 
-			result.put(colMap, value);
+			result.add(value);
 		}
 		
 		return result;
