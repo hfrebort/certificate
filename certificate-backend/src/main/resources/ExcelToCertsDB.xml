@@ -3,23 +3,23 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xsi:noNamespaceSchemaLocation="./ExcelToCertsDB.xsd" 
 	sheetName="Auditprogramm - Gültige Zert">
-	<columnMapping excelColumn="B"  type="date" databaseColumn="finished" />
-	<columnMapping excelColumn="C"  type="date" databaseColumn="vb1" />
-	<columnMapping excelColumn="D"  type="date" databaseColumn="vb2" /> 					
-	<columnMapping excelColumn="E"  type="date" databaseColumn="vb3" /> 					
-	<columnMapping excelColumn="F"  type="date" databaseColumn="vb4" /> 					
-	<columnMapping excelColumn="G"  type="date" databaseColumn="manufacturer" />
-	<columnMapping excelColumn="H"  type="date" databaseColumn="manufacturerContact" /> 	
+	<columnMapping excelColumn="B"  type="char" databaseColumn="finished" />
+	<columnMapping excelColumn="C"  type="char" databaseColumn="vb1" />
+	<columnMapping excelColumn="D"  type="char" databaseColumn="vb2" /> 					
+	<columnMapping excelColumn="E"  type="char" databaseColumn="vb3" /> 					
+	<columnMapping excelColumn="F"  type="char" databaseColumn="vb4" /> 					
+	<columnMapping excelColumn="G"  type="char" databaseColumn="manufacturer" />
+	<columnMapping excelColumn="H"  type="char" databaseColumn="manufacturerContact" /> 	
 	<columnMapping excelColumn="I"  type="char" databaseColumn="manufacturerLocation" /> 	
 	<columnMapping excelColumn="J"  type="char" databaseColumn="productDescription" /> 	
 	<columnMapping excelColumn="K"  type="char" databaseColumn="auditMonthLatest" /> 		
 	<columnMapping excelColumn="L"  type="char" databaseColumn="checkedBy" /> 			
-	<columnMapping excelColumn="M"  type="date" databaseColumn="auditor" /> 					
+	<columnMapping excelColumn="M"  type="char" databaseColumn="auditor" /> 					
 	<columnMapping excelColumn="N"  type="char" databaseColumn="checkOf" /> 				
 	<columnMapping excelColumn="O"  type="char" databaseColumn="probeTaken" /> 			
 	<columnMapping excelColumn="P"  type="char" databaseColumn="AoC" /> 					
 	<columnMapping excelColumn="Q"  type="char" databaseColumn="n1" />  					
-	<columnMapping excelColumn="R"  type="int"  databaseColumn="n2" />  					
+	<columnMapping excelColumn="R"  type="char" databaseColumn="n2" />  					
 	<columnMapping excelColumn="S"  type="char" databaseColumn="n3" />  					
 	<columnMapping excelColumn="T"  type="char" databaseColumn="n4" />  					
 	<columnMapping excelColumn="U"  type="char" databaseColumn="n5" />  					
@@ -28,13 +28,13 @@
 	<columnMapping excelColumn="X"  type="char" databaseColumn="n8" />  					
 	<columnMapping excelColumn="Y"  type="char" databaseColumn="n9" />  					
 	<columnMapping excelColumn="Z"  type="char" databaseColumn="n10" /> 					
-	<columnMapping excelColumn="AA" type="char" databaseColumn="certIssued" /> 			
-	<columnMapping excelColumn="AB" type="char" databaseColumn="fack1" /> 				
-	<columnMapping excelColumn="AC" type="date" databaseColumn="fack2" /> 				
+	<columnMapping excelColumn="AA" type="date" databaseColumn="certIssued" /> 			
+	<columnMapping excelColumn="AB" type="char" databaseColumn="monitorContractCompany" /> 					<!-- Überwachungsvertrag mit Firma  		-->		
+	<columnMapping excelColumn="AC" type="char" databaseColumn="monitorContractInspectionAuthority" /> 		<!-- Überwachungsvertrag mit Prüfstelle  	-->			
 	<columnMapping excelColumn="AD" type="char" databaseColumn="certNumber" /> 			
 	<columnMapping excelColumn="AE" type="char" databaseColumn="BPVbranches" />			
 	<columnMapping excelColumn="AF" type="char" databaseColumn="countryforInvoice" /> 	
-	<columnMapping excelColumn="AG" type="date" databaseColumn="industry" />				
+	<columnMapping excelColumn="AG" type="char" databaseColumn="industry" />				
 	<columnMapping excelColumn="AH" type="char" databaseColumn="internalCostLocation" />	
 	<columnMapping excelColumn="AI" type="char" databaseColumn="report2018" />			
 	<columnMapping excelColumn="AJ" type="char" databaseColumn="report2017" />			
