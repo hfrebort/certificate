@@ -19,18 +19,29 @@ public class InsertCertsToDB {
                 "fkVersionId",
                 columnMapping.stream().map( c -> c.getDatabaseColumn()).collect(Collectors.toList()));
 
-        int fkVersionId = getNextVersionId(conn, nameOfImporter);
+        try {
 
-        try (PreparedStatement insert = conn.prepareStatement(insertSql)) {
+            conn.setAutoCommit(false);
 
-            for ( final List<Object> row : (Iterable<List<Object>>) data::iterator) {
-                insert.clearParameters();
-                fillStatement(row, columnMapping, fkVersionId, insert);
-                insert.addBatch();
+            int fkVersionId = getNextVersionId(conn, nameOfImporter);
+
+            try (PreparedStatement insert = conn.prepareStatement(insertSql)) {
+
+                for (final List<Object> row : (Iterable<List<Object>>) data::iterator) {
+                    insert.clearParameters();
+                    fillStatement(row, columnMapping, fkVersionId, insert);
+                    insert.addBatch();
+                }
+
+                int[] rowInserted = insert.executeBatch();
+                int insertCount = Arrays.stream(rowInserted).sum();
             }
 
-            int[] rowInserted = insert.executeBatch();
-            int insertCount = Arrays.stream(rowInserted).sum();
+            conn.commit();
+        }
+        catch (SQLException sex) {
+            conn.rollback();
+            throw sex;
         }
     }
 
