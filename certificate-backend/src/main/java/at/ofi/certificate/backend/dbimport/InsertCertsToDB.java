@@ -1,10 +1,12 @@
 package at.ofi.certificate.backend.dbimport;
 
 import at.ofi.exceltocertsdb.ColumnMappingType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
+import java.time.Duration;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,35 +14,56 @@ import java.util.stream.Stream;
 
 public class InsertCertsToDB {
 
+    private static Logger log = LogManager.getLogger(InsertCertsToDB.class);
+
     public static void run(Stream<List<Object>> data, List<ColumnMappingType> columnMapping, Connection conn, String nameOfImporter)
         throws SQLException {
+
+        long startTime = System.currentTimeMillis();
 
         final String insertSql = getSqlForCertInsert(
                 "fkVersionId",
                 columnMapping.stream().map( c -> c.getDatabaseColumn()).collect(Collectors.toList()));
 
         try {
-
+            log.debug("begin transaction");
             conn.setAutoCommit(false);
 
             int fkVersionId = getNextVersionId(conn, nameOfImporter);
+            log.debug("new versionId generated: {}", fkVersionId);
+
+            int insertCount = -1;
 
             try (PreparedStatement insert = conn.prepareStatement(insertSql)) {
 
+                int numberInserts = 0;
                 for (final List<Object> row : (Iterable<List<Object>>) data::iterator) {
                     insert.clearParameters();
                     fillStatement(row, columnMapping, fkVersionId, insert);
                     insert.addBatch();
+                    ++numberInserts;
                 }
+                log.debug("number of inserts added to batch: {}", numberInserts);
 
                 int[] rowInserted = insert.executeBatch();
-                int insertCount = Arrays.stream(rowInserted).sum();
+                insertCount = Arrays.stream(rowInserted).sum();
             }
 
             conn.commit();
+            log.debug("commit transaction");
+
+            Duration durationImport = Duration.ofMillis(System.currentTimeMillis()-startTime);
+            log.info("version created: {} | certificates (rows) inserted: {} | duration: {}s {}ms",
+                    fkVersionId,
+                    insertCount,
+                    durationImport.toSecondsPart(),
+                    durationImport.toMillisPart());
         }
         catch (SQLException sex) {
+            log.error("exception at import", sex);
+            log.error("rolling back transaction...");
             conn.rollback();
+            log.error("rollback successful");
             throw sex;
         }
     }

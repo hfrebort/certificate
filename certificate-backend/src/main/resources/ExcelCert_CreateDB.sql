@@ -1,4 +1,4 @@
-#CREATE DATABASE excelcerts CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE excelcerts CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 use excelcerts;
 
 create table version (
@@ -12,9 +12,9 @@ create table cert (
 	  fkVersionId			int 		  not null
 	, finished 				varchar(32)   null	# "Erledi-gung"
 	, vb1 					varchar(255)  null
-    , vb2 					varchar(32)   null
-    , vb3 					varchar(32)   null
-    , vb4 					varchar(32)   null
+    , vb2 					varchar(255)   null
+    , vb3 					varchar(255)   null
+    , vb4 					varchar(255)   null
     , manufacturer 			varchar(255)  null	# "Name des          Herstellers"
     , manufacturerContact 	varchar(128)  null	# "Anprechperson beim Hersteller"
     , manufacturerLocation 	varchar(128)  null	# "Produktionsstandort des Herstellers"

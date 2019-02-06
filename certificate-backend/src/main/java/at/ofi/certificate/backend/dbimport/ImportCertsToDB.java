@@ -1,6 +1,8 @@
 package at.ofi.certificate.backend.dbimport;
 
 import at.ofi.exceltocertsdb.CertificateSheetType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
@@ -17,6 +19,8 @@ import java.util.stream.Stream;
 
 public class ImportCertsToDB {
 
+    private static Logger log = LogManager.getLogger(ImportCertsToDB.class);
+
     public static void run(String mappingXml, String certsXls, String JdbcConnectionUrl)
             throws IOException, SQLException {
 
@@ -27,12 +31,16 @@ public class ImportCertsToDB {
              Workbook       wb       = WorkbookFactory.create(XlsInput);
              Connection     conn     = DriverManager.getConnection(JdbcConnectionUrl);)
         {
+            log.debug("loading sheet [{}]", mappings.getSheetName());
             Sheet certSheet = wb.getSheet(mappings.getSheetName());
 
+            log.debug("loading rows of sheet to stream");
             Stream<List<Object>> dataRowStream =
                     ReadCertsFromExcelSheet.readRowsUntilEmpty(certSheet, mappings.getColumnMapping(), 1);
 
+            log.debug("import started");
             InsertCertsToDB.run(dataRowStream, mappings.getColumnMapping(), conn, "da Spindi wor's");
+            log.debug("import ended");
         }
     }
 }
