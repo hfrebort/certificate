@@ -2,6 +2,7 @@ package at.ofi.certificate.backend.reader;
 
 import java.io.InputStream;
 
+import at.ofi.certificate.backend.dbimport.MappingSheetReader;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -36,7 +37,7 @@ public class MappingSheetReaderTest {
 
 	private void whenRead() {
 		InputStream inputStream = ClassLoader.getSystemResourceAsStream("ExcelToCertsDB.xml");
-		this.mapping = this.reader.read(inputStream).getValue();
+		this.mapping = this.reader.read(inputStream);
 	}
 
 	private void givenAnInstance() {

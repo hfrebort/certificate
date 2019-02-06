@@ -4,6 +4,8 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import at.ofi.certificate.backend.dbimport.MappingSheetReader;
+import at.ofi.certificate.backend.dbimport.ReadCertsFromExcelSheet;
 import at.ofi.exceltocertsdb.ColumnMappingType;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -19,7 +21,7 @@ public class ReadXlsxWithMappings {
 	
 	@Test
 	public void ReadExcelWithMappingsTest() throws Exception {
-		CertificateSheetType mappings = MappingSheetReader.read(ClassLoader.getSystemResourceAsStream("ExcelToCertsDB.xml")).getValue();
+		CertificateSheetType mappings = MappingSheetReader.read(ClassLoader.getSystemResourceAsStream("ExcelToCertsDB.xml"));
 		List<ColumnMappingType> mappingCols = mappings.getColumnMapping();
 		
 		try (	PrintWriter output = getUTF8writer("c:\\temp\\cert\\output_readWithMapping.txt");
@@ -28,7 +30,7 @@ public class ReadXlsxWithMappings {
 		{
 			Sheet certSheet = wb.getSheet(mappings.getSheetName());
 			int skipRows = 1;
-			ExcelSheetReader
+			ReadCertsFromExcelSheet
 				.readRowsUntilEmpty(certSheet, mappings.getColumnMapping(), skipRows)
 				.forEach( dataRow -> {
 						for ( int i=0; i < dataRow.size(); ++i) {

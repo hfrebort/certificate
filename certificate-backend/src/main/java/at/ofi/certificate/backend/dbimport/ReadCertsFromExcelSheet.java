@@ -1,4 +1,4 @@
-package at.ofi.certificate.backend.reader;
+package at.ofi.certificate.backend.dbimport;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,7 +14,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import at.ofi.exceltocertsdb.ColumnMappingType;
 import org.apache.poi.ss.util.CellReference;
 
-public class ExcelSheetReader {
+public class ReadCertsFromExcelSheet {
 
 	//private static final String EMPTY_STRING = "";
 

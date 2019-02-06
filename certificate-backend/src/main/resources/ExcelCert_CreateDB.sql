@@ -3,7 +3,7 @@ use excelcerts;
 
 create table version (
 	id 				int 			NOT NULL AUTO_INCREMENT,
-    imported 		date 			not null,
+    imported 		datetime		not null,
     importedByName	varchar(128)	null,
      PRIMARY KEY (id)
 );

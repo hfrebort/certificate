@@ -1,7 +1,5 @@
-package at.ofi.certificate.backend;
+package at.ofi.certificate.backend.dbimport;
 
-import at.ofi.certificate.backend.reader.ExcelSheetReader;
-import at.ofi.certificate.backend.reader.MappingSheetReader;
 import at.ofi.exceltocertsdb.CertificateSheetType;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -17,13 +15,13 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class importCertsToDB {
+public class ImportCertsToDB {
 
     public static void run(String mappingXml, String certsXls, String JdbcConnectionUrl)
             throws IOException, SQLException {
 
         CertificateSheetType mappings =
-                MappingSheetReader.read(ClassLoader.getSystemResourceAsStream(mappingXml)).getValue();
+                MappingSheetReader.read(ClassLoader.getSystemResourceAsStream(mappingXml));
 
         try (InputStream    XlsInput = new FileInputStream(new File(certsXls));
              Workbook       wb       = WorkbookFactory.create(XlsInput);
@@ -32,9 +30,9 @@ public class importCertsToDB {
             Sheet certSheet = wb.getSheet(mappings.getSheetName());
 
             Stream<List<Object>> dataRowStream =
-                    ExcelSheetReader.readRowsUntilEmpty(certSheet, mappings.getColumnMapping(), 1);
+                    ReadCertsFromExcelSheet.readRowsUntilEmpty(certSheet, mappings.getColumnMapping(), 1);
 
-            insertCertsToDB.run(dataRowStream, mappings.getColumnMapping(), conn);
+            InsertCertsToDB.run(dataRowStream, mappings.getColumnMapping(), conn, "da Spindi wor's");
         }
     }
 }
