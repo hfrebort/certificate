@@ -2,7 +2,7 @@ package at.ofi.certificate.backend.reader;
 
 import java.io.InputStream;
 
-import at.ofi.certificate.backend.dbimport.MappingSheetReader;
+import at.ofi.certificate.backend.dbimport.MappingReader;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -10,7 +10,7 @@ import at.ofi.exceltocertsdb.CertificateSheetType;
 
 public class MappingSheetReaderTest {
 
-	private MappingSheetReader reader;
+	private MappingReader reader;
 	private CertificateSheetType mapping;
 
 	@Test
@@ -41,7 +41,7 @@ public class MappingSheetReaderTest {
 	}
 
 	private void givenAnInstance() {
-		this.reader = new MappingSheetReader();
+		this.reader = new MappingReader();
 
 	}
 

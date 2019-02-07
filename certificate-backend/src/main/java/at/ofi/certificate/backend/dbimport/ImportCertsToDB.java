@@ -25,7 +25,7 @@ public class ImportCertsToDB {
             throws IOException, SQLException {
 
         CertificateSheetType mappings =
-                MappingSheetReader.read(ClassLoader.getSystemResourceAsStream(mappingXml));
+                MappingReader.read(ClassLoader.getSystemResourceAsStream(mappingXml));
 
         try (InputStream    XlsInput = new FileInputStream(new File(certsXls));
              Workbook       wb       = WorkbookFactory.create(XlsInput);
