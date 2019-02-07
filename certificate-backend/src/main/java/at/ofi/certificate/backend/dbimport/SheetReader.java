@@ -1,9 +1,7 @@
 package at.ofi.certificate.backend.dbimport;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -14,19 +12,19 @@ import org.apache.poi.ss.usermodel.Sheet;
 import at.ofi.exceltocertsdb.ColumnMappingType;
 import org.apache.poi.ss.util.CellReference;
 
-public class ReadCertsFromExcelSheet {
+public class SheetReader {
 
 	//private static final String EMPTY_STRING = "";
 
-	public static Stream<List<Object>> readRowsUntilEmpty(final Sheet certSheet, final List<ColumnMappingType> columnMapping, int skipRows) {
+	public static Stream<List<Object>> readSheetUntilEmptyRow(final Sheet certSheet, final List<ColumnMappingType> columnMapping, int skipRows) {
 
 		return
 			java.util.stream.StreamSupport.stream(certSheet.spliterator(), false)
 			.skip(skipRows)
 			//.takeWhile(row -> row.getFirstCellNum() != -1) // short representing the first logical cell in the row, or -1 if the row does not contain any cells.
-			.map( row -> readRowDataToMap(row, columnMapping) );
+			.map( row -> readRow(row, columnMapping) );
 	}
-	private static List<Object> readRowDataToMap(final Row row, final List<ColumnMappingType> columnMapping)  {
+	private static List<Object> readRow(final Row row, final List<ColumnMappingType> columnMapping)  {
 		
 		final List<Object> result = new ArrayList<>(columnMapping.size());
 

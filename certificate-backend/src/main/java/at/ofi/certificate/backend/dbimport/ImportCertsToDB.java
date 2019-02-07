@@ -36,7 +36,7 @@ public class ImportCertsToDB {
 
             log.debug("loading rows of sheet to stream");
             Stream<List<Object>> dataRowStream =
-                    ReadCertsFromExcelSheet.readRowsUntilEmpty(certSheet, mappings.getColumnMapping(), 1);
+                    SheetReader.readSheetUntilEmptyRow(certSheet, mappings.getColumnMapping(), 1);
 
             log.debug("import started");
             InsertCertsToDB.run(dataRowStream, mappings.getColumnMapping(), conn, "da Spindi wor's");

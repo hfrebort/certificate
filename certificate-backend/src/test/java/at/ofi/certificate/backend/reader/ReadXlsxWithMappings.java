@@ -5,7 +5,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import at.ofi.certificate.backend.dbimport.MappingReader;
-import at.ofi.certificate.backend.dbimport.ReadCertsFromExcelSheet;
+import at.ofi.certificate.backend.dbimport.SheetReader;
 import at.ofi.exceltocertsdb.ColumnMappingType;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -30,8 +30,8 @@ public class ReadXlsxWithMappings {
 		{
 			Sheet certSheet = wb.getSheet(mappings.getSheetName());
 			int skipRows = 1;
-			ReadCertsFromExcelSheet
-				.readRowsUntilEmpty(certSheet, mappings.getColumnMapping(), skipRows)
+			SheetReader
+				.readSheetUntilEmptyRow(certSheet, mappings.getColumnMapping(), skipRows)
 				.forEach( dataRow -> {
 						for ( int i=0; i < dataRow.size(); ++i) {
 							output.printf("%s(%s)\t",
