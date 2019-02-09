@@ -17,16 +17,19 @@ import at.ofi.exceltocertsdb.CertificateSheetType;
 
 public class ReadXlsxWithMappings {
 
-	private static final String SampleXls = "c:\\temp\\cert\\CertsSample.xlsx";
+	private static final String SAMPLE_XLS = "src/test/resources/CertsSample.xlsx";
+	
+	private static final String OUTPUT_XLS = System.getProperty("java.io.tmpdir") + "output_readWithMapping.txt";
 	
 	@Test
 	public void ReadExcelWithMappingsTest() throws Exception {
+		System.out.println("Output: " + OUTPUT_XLS);
 		CertificateSheetType mappings = MappingReader.read(ClassLoader.getSystemResourceAsStream("ExcelToCertsDB.xml"));
 		List<ColumnMappingType> mappingCols = mappings.getColumnMapping();
 		
-		try (	PrintWriter output = getUTF8writer("c:\\temp\\cert\\output_readWithMapping.txt");
-				InputStream XlsInput = new FileInputStream(new File(SampleXls));
-				Workbook wb = WorkbookFactory.create(XlsInput))
+		try (	PrintWriter output = getUTF8writer(OUTPUT_XLS);
+				InputStream xlsInput = new FileInputStream(new File(SAMPLE_XLS));
+				Workbook wb = WorkbookFactory.create(xlsInput))
 		{
 			Sheet certSheet = wb.getSheet(mappings.getSheetName());
 			int skipRows = 1;
@@ -34,11 +37,10 @@ public class ReadXlsxWithMappings {
 				.readSheetUntilEmptyRow(certSheet, mappings.getColumnMapping(), skipRows)
 				.forEach( dataRow -> {
 						for ( int i=0; i < dataRow.size(); ++i) {
-							output.printf("%s(%s)\t",
-									mappingCols.get(i).getDatabaseColumn(), dataRow.get(i).toString());
+							output.printf("%s(%s)\t", mappingCols.get(i).getDatabaseColumn(), String.valueOf(dataRow.get(i)));
 						}
 						output.println("");
-				});
+				});			
 		}
 		catch (Exception e) {
 			Assert.fail(

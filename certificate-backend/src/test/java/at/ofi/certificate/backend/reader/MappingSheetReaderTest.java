@@ -2,20 +2,18 @@ package at.ofi.certificate.backend.reader;
 
 import java.io.InputStream;
 
-import at.ofi.certificate.backend.dbimport.MappingReader;
 import org.junit.Assert;
 import org.junit.Test;
 
+import at.ofi.certificate.backend.dbimport.MappingReader;
 import at.ofi.exceltocertsdb.CertificateSheetType;
 
 public class MappingSheetReaderTest {
 
-	private MappingReader reader;
 	private CertificateSheetType mapping;
 
 	@Test
 	public void testReadXmlMapping() throws Exception {
-		this.givenAnInstance();
 		this.whenRead();
 		this.thenObjetcsAreNotNull();
 		this.thenSheetNameIs("Auditprogramm - Gültige Zert");
@@ -37,12 +35,7 @@ public class MappingSheetReaderTest {
 
 	private void whenRead() {
 		InputStream inputStream = ClassLoader.getSystemResourceAsStream("ExcelToCertsDB.xml");
-		this.mapping = this.reader.read(inputStream);
-	}
-
-	private void givenAnInstance() {
-		this.reader = new MappingReader();
-
+		this.mapping = MappingReader.read(inputStream);
 	}
 
 }

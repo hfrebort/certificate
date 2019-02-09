@@ -3,8 +3,6 @@ package at.ofi.certificate.backend.dbimport;
 import java.io.InputStream;
 
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
 
 import at.ofi.exceltocertsdb.CertificateSheetType;

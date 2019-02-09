@@ -53,11 +53,10 @@ public class InsertCertsToDB {
             log.debug("commit transaction");
 
             Duration durationImport = Duration.ofMillis(System.currentTimeMillis()-startTime);
-            log.info("version created: {} | certificates (rows) inserted: {} | duration: {}s {}ms",
+            log.info("version created: {} | certificates (rows) inserted: {} | duration: {}ms",
                     fkVersionId,
                     insertCount,
-                    durationImport.toSecondsPart(),
-                    durationImport.toMillisPart());
+                    durationImport.toMillis());
         }
         catch (SQLException sex) {
             log.error("exception at import", sex);
