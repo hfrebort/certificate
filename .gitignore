@@ -3,8 +3,6 @@
 .project
 .settings/
 
-*.xlsx
-
 # Intellij
 .idea/
 *.iml
