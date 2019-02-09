@@ -11,19 +11,19 @@ import at.ofi.certificate.backend.dbimport.ImportCertsToDB;
 
 public class ExcelImportIT {
 
-	@Test
-	public void runImportTest() throws IOException, SQLException {
+   @Test
+   public void runImportTest() throws IOException, SQLException {
 
-		Logger log = LogManager.getLogger();
+      Logger log = LogManager.getLogger();
 
-		log.debug("rönning [runImportTest]...");
+      log.debug("rönning [runImportTest]...");
 
-		ImportCertsToDB.run(
-				"ExcelToCertsDB.xml",
-				"src/test/resources/CertsSample.xlsx", 
-				"jdbc:mysql://localhost/excelcerts?user=bee&password=0nrg");
+      ImportCertsToDB.run(
+            "ExcelToCertsDB.xml",
+            "src/test/resources/CertsSample.xlsx",
+            "jdbc:mysql://localhost/excelcerts?user=bee&password=0nrg");
 
-		// adding "&rewriteBatchedStatements=true" to connection string will break the returned rowCount by executeBatch()
-	}
+      // adding "&rewriteBatchedStatements=true" to connection string will break the returned rowCount by executeBatch()
+   }
 
 }

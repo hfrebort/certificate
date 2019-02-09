@@ -1,6 +1,3 @@
-/**
- * 
- */
 package at.ofi.certificate.backend;
 
 /**
@@ -8,11 +5,11 @@ package at.ofi.certificate.backend;
  * upload verification. Use insert for upload provision.
  * 
  * @author HFrebort
- *
+ * @version Feb 9, 2019
  */
 public interface CertificateService {
 
-	VerificationResult verify(VerificationContext context);
+   VerificationResult verify(VerificationContext context);
 
-	void insert(VerificationContext context);
+   void insert(VerificationContext context);
 }
