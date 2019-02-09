@@ -1,16 +1,13 @@
 package at.ofi.certificate.backend.dbimport;
 
+import at.ofi.exceltocertsdb.ColumnMappingType;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellReference;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
-
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-
-import at.ofi.exceltocertsdb.ColumnMappingType;
-import org.apache.poi.ss.util.CellReference;
 
 public class SheetReader {
 
@@ -61,13 +58,19 @@ public class SheetReader {
 		
 		return result;
 	}
-	private static String getStringRepresentation(Cell cell) {
+	private static String getStringRepresentation(final Cell cell) {
 
 		String result;
 
 		if ( cell.getCellType() == CellType.NUMERIC) {
-			cell.setCellType(CellType.STRING); // https://stackoverflow.com/questions/1072561/how-can-i-read-numeric-strings-in-excel-cells-as-string-not-numbers
-			result = cell.getStringCellValue();
+			if ( DateUtil.isCellDateFormatted(cell) ) {
+				SimpleDateFormat sdf = new SimpleDateFormat("YYYY.MM.DD");
+				result = sdf.format(cell.getDateCellValue());
+			}
+			else {
+				cell.setCellType(CellType.STRING); // https://stackoverflow.com/questions/1072561/how-can-i-read-numeric-strings-in-excel-cells-as-string-not-numbers
+				result = cell.getStringCellValue();
+			}
 		}
 		else {
 			result = cell.toString();
