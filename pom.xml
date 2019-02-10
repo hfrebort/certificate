@@ -15,6 +15,7 @@
 		<jaxb.version>2.1</jaxb.version>
 		<mysql.version>8.0.15</mysql.version>
 		<log4j.version>2.11.1</log4j.version>
+		<servlet.version>3.1.0</servlet.version>
 		
 		<junit.version>4.12</junit.version>
 		<mockito.version>1.9.5</mockito.version>
@@ -54,6 +55,11 @@
 				<groupId>org.apache.logging.log4j</groupId>
 				<artifactId>log4j-core</artifactId>
 				<version>${log4j.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>javax.servlet</groupId>
+			    <artifactId>javax.servlet-api</artifactId>
+			    <version>${servlet.version}</version>
 			</dependency>
 
 			<!-- TEST DEPENDENCIES -->

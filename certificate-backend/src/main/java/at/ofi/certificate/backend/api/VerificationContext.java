@@ -1,7 +1,7 @@
 /**
  * 
  */
-package at.ofi.certificate.backend;
+package at.ofi.certificate.backend.api;
 
 /**
  * @author HFrebort

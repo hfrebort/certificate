@@ -1,7 +1,7 @@
 package at.ofi.certificate.backend.dbimport;
 
-import java.io.File;
-import java.io.FileInputStream;
+import static java.lang.ClassLoader.getSystemResourceAsStream;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -22,12 +22,13 @@ public class ImportCertsToDB {
 
    private static final Logger LOG = LogManager.getLogger(ImportCertsToDB.class);
 
-   public static void run(String mappingXml, String certsXls, String jdbcConnectionUrl) throws IOException, SQLException {
+   private static final String MAPPING_XML = "ExcelToCertsDB.xml";
 
-      CertificateSheetType mappings = MappingReader.read(ClassLoader.getSystemResourceAsStream(mappingXml));
+   public static void run(InputStream xlsInput, String jdbcConnectionUrl) throws IOException, SQLException {
 
-      try (InputStream xlsInput = new FileInputStream(new File(certsXls));
-            Workbook workbook = WorkbookFactory.create(xlsInput);
+      CertificateSheetType mappings = MappingReader.read(getSystemResourceAsStream(MAPPING_XML));
+
+      try (Workbook workbook = WorkbookFactory.create(xlsInput);
             Connection connection = DriverManager.getConnection(jdbcConnectionUrl)) {
          LOG.debug("loading sheet [{}]", mappings.getSheetName());
          Sheet certSheet = workbook.getSheet(mappings.getSheetName());

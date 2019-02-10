@@ -1,5 +1,7 @@
 package at.ofi.certificate.backend;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -17,10 +19,10 @@ public class ExcelImportIT {
       Logger log = LogManager.getLogger();
 
       log.debug("rönning [runImportTest]...");
+      FileInputStream fileInputStream = new FileInputStream(new File("src/test/resources/CertsSample.xlsx"));
 
       ImportCertsToDB.run(
-            "ExcelToCertsDB.xml",
-            "src/test/resources/CertsSample.xlsx",
+            fileInputStream,
             "jdbc:mysql://localhost/excelcerts?user=bee&password=0nrg");
 
       // adding "&rewriteBatchedStatements=true" to connection string will break the returned rowCount by executeBatch()
