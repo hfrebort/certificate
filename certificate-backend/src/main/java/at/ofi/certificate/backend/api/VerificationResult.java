@@ -57,6 +57,7 @@ public class VerificationResult {
 
       public Builder() {
          status = Status.OK;
+         message = "Verification succeeded";
       }
 
       public Builder status(Status status) {
