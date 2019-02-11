@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<certificateSheet 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:noNamespaceSchemaLocation="./ExcelToCertsDB.xsd" 
+	sheetName="Sheet1">
+	<columnMapping excelColumn="A"  type="int"  databaseColumn="bumso" />
+	<columnMapping excelColumn="B"  type="char" databaseColumn="martha" />
+	<columnMapping excelColumn="C"  type="date" databaseColumn="fritz" /> 					
+</certificateSheet>
