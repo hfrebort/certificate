@@ -16,7 +16,7 @@ public class MappingReader {
                .unmarshal(new StreamSource(inputStream), CertificateSheetType.class)
                .getValue();
       } catch (final Exception e) {
-         throw new RuntimeException("Can not read definition file!");
+         throw new RuntimeException("Can not read definition file!" + e.getMessage(), e);
       }
    }
 

@@ -1,35 +1,36 @@
 package at.ofi.certificate.backend.dbimport;
 
-import static java.lang.ClassLoader.getSystemResourceAsStream;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Stream;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import at.ofi.exceltocertsdb.CertificateSheetType;
 
 public class ImportCertsToDB {
 
-   private static final Logger LOG = LogManager.getLogger(ImportCertsToDB.class);
+   private static final Logger LOG = LoggerFactory.getLogger(ImportCertsToDB.class);
 
    private static final String MAPPING_XML = "ExcelToCertsDB.xml";
 
-   public static void run(InputStream xlsInput, String jdbcConnectionUrl) throws IOException, SQLException {
+   public static void run(InputStream xlsInput) throws IOException, SQLException {
 
-      CertificateSheetType mappings = MappingReader.read(getSystemResourceAsStream(MAPPING_XML));
+      CertificateSheetType mappings = getMapping();
 
       try (Workbook workbook = WorkbookFactory.create(xlsInput);
-            Connection connection = DriverManager.getConnection(jdbcConnectionUrl)) {
+            Connection connection = getConnection()) {
          LOG.debug("loading sheet [{}]", mappings.getSheetName());
          Sheet certSheet = workbook.getSheet(mappings.getSheetName());
 
@@ -40,6 +41,27 @@ public class ImportCertsToDB {
          LOG.debug("import started");
          InsertCertsToDB.run(dataRowStream, mappings.getColumnMapping(), connection, "da Spindi wor's");
          LOG.debug("import ended");
+      }
+   }
+
+   private static Connection getConnection() throws RuntimeException {
+      try {
+         Context initContext = new InitialContext();
+         Context webContext = (Context) initContext.lookup("java:/comp/env");
+         DataSource dataSource = (DataSource) webContext.lookup("jdbc/certificate");
+         return dataSource.getConnection();
+      } catch (Exception e) {
+         throw new RuntimeException("Can not provide connection! " + e.getMessage(), e);
+      }
+   }
+
+   private static CertificateSheetType getMapping() {
+      try {
+         InputStream systemResourceAsStream = ImportCertsToDB.class.getClassLoader().getResourceAsStream(MAPPING_XML);
+         return MappingReader.read(systemResourceAsStream);
+      } catch (Exception e) {
+         LOG.error("Configuration error!", e);
+         throw new RuntimeException("Configuration error!", e);
       }
    }
 }

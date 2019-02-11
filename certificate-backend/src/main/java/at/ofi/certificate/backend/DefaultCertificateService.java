@@ -13,8 +13,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import at.ofi.certificate.backend.api.CertificateService;
 import at.ofi.certificate.backend.api.VerificationResult;
@@ -28,15 +28,13 @@ import at.ofi.certificate.backend.dbimport.ImportCertsToDB;
  */
 public class DefaultCertificateService implements CertificateService {
 
-   private static final Logger LOG = LogManager.getLogger(DefaultCertificateService.class);
-
-   private static final String JDBC_CONNECTION_URL = "jdbc:mysql://5.175.13.247/excelcerts?user=certificate_user&password=%Of92ym5";
+   private static final Logger LOG = LoggerFactory.getLogger(DefaultCertificateService.class);
 
    @Override
    public VerificationResult insert(InputStream inputStream) {
       Builder result = builder();
       try {
-         ImportCertsToDB.run(inputStream, JDBC_CONNECTION_URL);
+         ImportCertsToDB.run(inputStream);
       } catch (IOException | SQLException e) {
          result
                .status(Status.ERROR)

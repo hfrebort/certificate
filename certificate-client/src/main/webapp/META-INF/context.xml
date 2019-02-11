@@ -1,0 +1,10 @@
+<Context>
+	<Resource 
+		name="jdbc/certificate" 
+		auth="Container"
+		type="javax.sql.DataSource" 
+		username="mysqladmin"
+		password="fipsi123$" 
+		driverClassName="com.mysql.jdbc.Driver"
+		url="jdbc:mysql://5.175.13.247:3307/excelcerts" />
+</Context>

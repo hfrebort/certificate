@@ -13,14 +13,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import at.ofi.exceltocertsdb.ColumnMappingType;
 
 public class InsertCertsToDB {
 
-   private static final Logger LOG = LogManager.getLogger(InsertCertsToDB.class);
+   private static final Logger LOG = LoggerFactory.getLogger(InsertCertsToDB.class);
 
    public static void run(Stream<List<Object>> data, List<ColumnMappingType> columnMapping, Connection conn, String nameOfImporter)
       throws SQLException {
