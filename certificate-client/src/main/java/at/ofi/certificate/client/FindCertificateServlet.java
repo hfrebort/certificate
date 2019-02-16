@@ -1,8 +1,8 @@
 package at.ofi.certificate.client;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +14,8 @@ import at.ofi.certificate.backend.DefaultFindCertificateService;
 import at.ofi.certificate.backend.api.FindCertificateService;
 
 /**
+ * This is the servlet to find certificate entries.
+ * 
  * @author HFrebort
  * @version Feb 9, 2019
  */
@@ -23,22 +25,12 @@ public class FindCertificateServlet extends HttpServlet {
 
    private static final long serialVersionUID = 1L;
 
-   private static final String RESULT_HEADER = "<table><tr><td>Hersteller</td><td>Auditor</td><td>Normen</td></tr>";
-
-   private static final String RESULT_BODY = "<tr><td>%s</td><td>%s</td><td>%s</td></tr>";
-
-   private static final String RESULT_FOOTER = "</table>";
-
    private FindCertificateService service = new DefaultFindCertificateService();
 
    @Override
    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-      PrintWriter w = new PrintWriter(response.getOutputStream(), true);
-      w.println(String.format(RESULT_HEADER));
-      service.findEntries().forEach(c -> {
-         w.println(String.format(RESULT_BODY, c.getManufacturer(), c.getAuditor(), c.getNorms()));
-      });
-      w.println(String.format(RESULT_FOOTER));
-      w.close();
+      final RequestDispatcher dispatcher = request.getRequestDispatcher("searchResult.jsp");
+      request.setAttribute("certificateEntries", service.findEntries());
+      dispatcher.forward(request, response);
    }
 }

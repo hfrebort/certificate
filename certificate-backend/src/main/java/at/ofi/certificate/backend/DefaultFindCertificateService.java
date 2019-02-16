@@ -55,6 +55,7 @@ public class DefaultFindCertificateService implements FindCertificateService {
                   .productDescription(resultSet.getString("productDescription"))
                   .auditMonthLatest(resultSet.getString("auditMonthLatest"))
                   .auditor(resultSet.getString("auditor"))
+                  .certNumber(resultSet.getString("certNumber"))
                   .industry(resultSet.getString("industry"))
                   .norms(getNorms((k) -> getNorm(resultSet, k)))
                   .build());
