@@ -35,7 +35,9 @@ public class FindCertificateServlet extends HttpServlet {
    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       PrintWriter w = new PrintWriter(response.getOutputStream(), true);
       w.println(String.format(RESULT_HEADER));
-      service.findEntries().forEach(c -> w.println(String.format(RESULT_BODY, c.getManufacturer(), c.getAuditor(), c.getNorms())));
+      service.findEntries().forEach(c -> {
+         w.println(String.format(RESULT_BODY, c.getManufacturer(), c.getAuditor(), c.getNorms()));
+      });
       w.println(String.format(RESULT_FOOTER));
       w.close();
    }
