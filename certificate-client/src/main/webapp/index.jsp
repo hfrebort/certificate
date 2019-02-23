@@ -9,7 +9,7 @@
 	crossorigin="anonymous">
 </head>
 <body>
-
+	<jsp:include page="navigation.jsp" />
 	<div class="jumbotron">
 		<h1 class="display-4">OFI Auditdatei Upload</h1>
 		<p class="lead">Applikaton zur Verwaltung von Zertifikaten</p>

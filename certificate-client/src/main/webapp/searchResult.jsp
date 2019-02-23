@@ -1,4 +1,4 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,32 +10,33 @@
 	crossorigin="anonymous">
 </head>
 <body>
-  <h2>Ergebnisse</h2>
+	<jsp:include page="navigation.jsp" />
+	<h2>Ergebnisse</h2>
 	<div class="table-responsive">
-	<table class="table">
-		<tr>
-			<th>Zertifikatsnummer</th>
-			<th>Hersteller</th>
-			<th>Ansprechpartner</th>
-			<th>Produktbeschreibung</th>
-			<th>Auditor</th>
-			<th>Normen</th>
-			<th>Branche</th>
-		</tr>
-	
-		<c:forEach var="entry" items="${certificateEntries}">
-		<tr>
-			<td>${entry.certNumber}</td>
-			<td>${entry.manufacturer}</td>
-			<td>${entry.manufacturerContact}</td>
-			<td>${entry.productDescription}</td>
-			<td>${entry.auditor}</td>
-			<td>${entry.norms}</td>
-			<td>${entry.industry}</td>
-		</tr>
-		</c:forEach>
+		<table class="table table-striped"">
+			<tr>
+				<th>Zertifikatsnummer</th>
+				<th>Hersteller</th>
+				<th>Ansprechpartner</th>
+				<th>Produktbeschreibung</th>
+				<th>Auditor</th>
+				<th>Normen</th>
+				<th>Branche</th>
+			</tr>
 
-	</table>
+			<c:forEach var="entry" items="${certificateEntries}">
+				<tr>
+					<td>${entry.certNumber}</td>
+					<td>${entry.manufacturer}</td>
+					<td>${entry.manufacturerContact}</td>
+					<td>${entry.productDescription}</td>
+					<td>${entry.auditor}</td>
+					<td>${entry.norms}</td>
+					<td>${entry.industry}</td>
+				</tr>
+			</c:forEach>
+
+		</table>
 	</div>
-  </body>
+</body>
 </html>
