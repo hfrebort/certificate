@@ -37,15 +37,26 @@ public class DefaultFindCertificateService implements FindCertificateService {
 
    private static final String SELECT_STATEMENT = "select * from cert where fkVersionId in ( select max(id) from version)";
 
+   private static final String SELECT_STATEMENT_BY_VERSION_ID = "select * from cert where fkVersionId = '%s'";
+
    private static final String[] NORMS = {"n1", "n2", "n3", "n4", "n5", "n6", "n7", "n8", "n9", "n10"};
 
    ConnectionProvider provider = new ConnectionProvider();
 
    @Override
    public List<CertificateEntry> findEntries() {
+      return findByQuery(SELECT_STATEMENT);
+   }
+
+   @Override
+   public List<CertificateEntry> findEntriesByVersionId(String versionId) {
+      return findByQuery(String.format(SELECT_STATEMENT_BY_VERSION_ID, versionId));
+   }
+
+   private List<CertificateEntry> findByQuery(final String query) {
       List<CertificateEntry> result = new ArrayList<>();
       Connection connection = provider.getConnection();
-      try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_STATEMENT)) {
+      try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
          final ResultSet resultSet = preparedStatement.executeQuery();
          while (resultSet.next()) {
             result.add(CertificateEntry.builder()

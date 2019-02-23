@@ -1,6 +1,7 @@
 package at.ofi.certificate.client;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import at.ofi.certificate.backend.DefaultFindCertificateService;
+import at.ofi.certificate.backend.api.CertificateEntry;
 import at.ofi.certificate.backend.api.FindCertificateService;
 
 /**
@@ -29,8 +31,17 @@ public class FindCertificateServlet extends HttpServlet {
 
    @Override
    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      final String versionId = request.getParameter("versionId");
+      final List<CertificateEntry> certificateEntries = getCertificateEntries(versionId);
       final RequestDispatcher dispatcher = request.getRequestDispatcher("searchResult.jsp");
-      request.setAttribute("certificateEntries", service.findEntries());
+      request.setAttribute("certificateEntries", certificateEntries);
       dispatcher.forward(request, response);
+   }
+
+   private List<CertificateEntry> getCertificateEntries(final String versionId) {
+      if (versionId != null) {
+         return service.findEntriesByVersionId(versionId);
+      }
+      return service.findEntries();
    }
 }

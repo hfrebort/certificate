@@ -15,6 +15,8 @@ import java.util.Date;
  */
 public class Version {
 
+   private String versionId;
+
    private Date imported;
 
    private String importer;
@@ -23,9 +25,17 @@ public class Version {
     * @param imported
     * @param importer
     */
-   public Version(Date imported, String importer) {
+   public Version(final String versionId, Date imported, String importer) {
+      this.versionId = versionId;
       this.imported = imported;
       this.importer = importer;
+   }
+
+   /**
+    * @return the versionId
+    */
+   public String getVersionId() {
+      return versionId;
    }
 
    /**

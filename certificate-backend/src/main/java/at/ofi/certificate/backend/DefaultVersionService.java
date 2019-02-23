@@ -40,7 +40,10 @@ public class DefaultVersionService implements VersionService {
       try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_STATEMENT)) {
          final ResultSet resultSet = preparedStatement.executeQuery();
          while (resultSet.next()) {
-            versions.add(new Version(resultSet.getDate("imported"), resultSet.getString("importedByName")));
+            versions.add(new Version(
+                  resultSet.getString("id"),
+                  resultSet.getDate("imported"),
+                  resultSet.getString("importedByName")));
          }
       } catch (SQLException e) {
          LOG.error("Unable to get versions!", e);
