@@ -9,9 +9,7 @@ package at.ofi.certificate.backend;
 
 import static at.ofi.certificate.backend.api.VerificationResult.builder;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.sql.SQLException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +33,7 @@ public class DefaultCertificateService implements CertificateService {
       Builder result = builder();
       try {
          ImportCertsToDB.run(inputStream);
-      } catch (IOException | SQLException e) {
+      } catch (Exception e) {
          result
                .status(Status.ERROR)
                .message("Unable to insert into DB: " + e.getMessage());

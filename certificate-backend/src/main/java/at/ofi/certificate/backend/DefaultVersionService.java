@@ -29,7 +29,7 @@ public class DefaultVersionService implements VersionService {
 
    private static final Logger LOG = LoggerFactory.getLogger(DefaultCertificateService.class);
 
-   private static final String SELECT_STATEMENT = "select * from version";
+   private static final String SELECT_STATEMENT = "select * from version order by imported desc";
 
    private ConnectionProvider provider = new ConnectionProvider();
 
